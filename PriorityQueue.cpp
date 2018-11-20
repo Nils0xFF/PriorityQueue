@@ -17,7 +17,7 @@ PQElement PriorityQueue::extractMin(void) {
 	if (this->amount == 1) return queue[--this->amount];
 	PQElement& min = this->queue[1];
 	swap(min, this->queue[this->amount--]);
-	this->sortDown(1);
+	this->heapDown(1);
 	return min;
 }
 
@@ -33,7 +33,7 @@ void PriorityQueue::insert(const PQElement& e) {
 		}
 		ref[newID] = amount;
 		newID++;
-		sortUp(amount);
+		heapUp(amount);
 	}
 	else {
 		cout << "Error: queue is full!" << endl;
@@ -87,7 +87,7 @@ bool PriorityQueue::isValid() const {
 	return true;
 }
 
-void PriorityQueue::sortDown(int i) const {
+void PriorityQueue::heapDown(int i) const {
 	int l = getLeftChildIndex(i);
 	int r = getRightChildIndex(i);
 	int smallest = i;
@@ -98,11 +98,11 @@ void PriorityQueue::sortDown(int i) const {
 	if (smallest != i && smallest <= amount)
 	{
 		swap(queue[i], queue[smallest]);
-		sortDown(smallest);
+		heapDown(smallest);
 	}
 }
 
-void PriorityQueue::sortUp(int i) const {
+void PriorityQueue::heapUp(int i) const {
 	while (i > 1 && queue[getParentIndex(i)] > queue[i]) {
 		int temp = ref[queue[i].getId()];
 		swap(queue[i], queue[getParentIndex(i)]);
@@ -116,8 +116,8 @@ void PriorityQueue::increaseSearch(int id, int value) {
 	for (int i = 1; i <= amount; i++) {
 		if (queue[i].getId() == id ) {
 			queue[i].setPriority(queue[i].getPriority() + value);
-			if (value > 0) sortDown(i);
-			else sortUp(i);
+			if (value > 0) heapDown(i);
+			else heapUp(i);
 			return;
 		}
 	}
@@ -126,26 +126,29 @@ void PriorityQueue::increaseSearch(int id, int value) {
 void PriorityQueue::increase(int id, int value) {
 	if (value == 0 || id >= newID || id < 0) return;
 	queue[ref[id]].setPriority(queue[ref[id]].getPriority() + value);
-	if (value > 0) sortDown(ref[id]);
-	else sortUp(ref[id]);
+	if (value > 0) heapDown(ref[id]);
+	else heapUp(ref[id]);
 }
 
 void PriorityQueue::removeSearch(int id) {
 	if (id >= newID || id < 0) return;
 	for (int i = 1; i <= amount; i++) {
 		if (queue[i].getId() == id) {
-			queue[i].setPriority(INT_MIN);
-			sortUp(i);
-			extractMin();
+			swap(queue[i], queue[amount]);
+			amount--;
+			if (i > 1 && queue[i] < queue[getParentIndex(i)]) heapUp(i);
+			else heapDown(i);
 			return;
 		}
 	}
 }
 
 void PriorityQueue::remove(int id) {
-	queue[ref[id]].setPriority(INT_MIN);
-	sortUp(ref[id]);
-	extractMin();
+	int swapPos = ref[id];
+	swap(queue[ref[id]], queue[amount]);
+	amount--;
+	if(swapPos > 1 && queue[swapPos] < queue[getParentIndex(swapPos)]) heapUp(swapPos);
+	else heapDown(swapPos);
 	return;
 }
 

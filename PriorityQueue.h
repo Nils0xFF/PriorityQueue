@@ -35,8 +35,8 @@ public:
 
 	bool isValid() const;
 	void insert(const PQElement&);
-	void sortDown(int i) const;
-	void sortUp(int i) const;
+	void heapDown(int i) const;
+	void heapUp(int i) const;
 	void swap(PQElement& a, PQElement& b) const;
 
 	void increaseSearch(int id, int value);
