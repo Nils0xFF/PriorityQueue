@@ -21,8 +21,8 @@ public:
 		return this->priority > e.priority;
 	}
 
-	int getPriority(void) const { return priority; }
-	int getId(void) const { return id; }
+	int getPriority(void) const { return this->priority; }
+	int getId(void) const { return this->id; }
 	void setPriority(int priority) { this->priority = priority; }
 	void setId(int id) { this->id = id; }
 
