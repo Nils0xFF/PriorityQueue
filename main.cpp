@@ -10,7 +10,7 @@ int main() {
 
 	clock_t start = clock();
 	for (int i = 0; i < n; i++) {
-		queue->insert(PQElement(rand->give()));
+		queue->insert(PQElement(i, rand->give()));
 	}
 	clock_t end = clock();
 
@@ -41,7 +41,7 @@ int main() {
 	queue = new PriorityQueue(n);
 
 	for (int i = 0; i < n; i++) {
-		queue->insert(PQElement(rand->give()));
+		queue->insert(PQElement(i, rand->give()));
 	}
 
 	delete rand;
@@ -64,7 +64,7 @@ int main() {
 
 	start = clock();
 	for (int i = 0; i < n; i++) {
-		queue->insert(PQElement(rand->give()));
+		queue->insert(PQElement(i, rand->give()));
 	}
 	end = clock();
 
@@ -86,7 +86,7 @@ int main() {
 
 	start = clock();
 	for (int i = 0; i < n; i++) {
-		queue->insert(PQElement(rand->give()));
+		queue->insert(PQElement(i, rand->give()));
 	}
 	end = clock();
 

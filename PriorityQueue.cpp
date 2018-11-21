@@ -25,14 +25,12 @@ void PriorityQueue::insert(const PQElement& e) {
 	if (this->amount < this->length) {
 		amount++;
 		this->queue[amount] = e;
-		this->queue[amount].setId(this->newID);
-		if (this->newID > refLength) {
+		if (e.getId() > refLength) {
 			cout << "Limit reached";
 			refLength *= 2;
 			ref = (int*) realloc(ref, refLength * sizeof(int));
 		}
-		ref[newID] = amount;
-		newID++;
+		ref[e.getId()] = amount;
 		heapUp(amount);
 	}
 	else {
