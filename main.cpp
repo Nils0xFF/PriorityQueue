@@ -4,13 +4,18 @@
 #include "Random.h"
 
 int main() {
+	PQElement feld[5000000];
 	int n = 100000;
 	Random *rand = new Random(n);
 	PriorityQueue *queue = new PriorityQueue(n);
+	PriorityQueue *queue2 = new PriorityQueue(5000000);
 
 	clock_t start = clock();
 	for (int i = 0; i < n; i++) {
 		queue->insert(PQElement(i, rand->give()));
+	}
+	for (int i = 0; i < n; i++) {
+		feld[i] = queue->extractMin();
 	}
 	clock_t end = clock();
 
@@ -66,6 +71,9 @@ int main() {
 	for (int i = 0; i < n; i++) {
 		queue->insert(PQElement(i, rand->give()));
 	}
+	for (int i = 0; i < n; i++) {
+		feld[i] = queue->extractMin();
+	}
 	end = clock();
 
 	// cout << queue->toStringDebug();
@@ -87,6 +95,9 @@ int main() {
 	start = clock();
 	for (int i = 0; i < n; i++) {
 		queue->insert(PQElement(i, rand->give()));
+	}
+	for (int i = 0; i < n; i++) {
+		feld[i] = queue->extractMin();
 	}
 	end = clock();
 

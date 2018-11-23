@@ -14,9 +14,13 @@ PQElement& PriorityQueue::getMin(void) const {
 
 PQElement PriorityQueue::extractMin(void) {
 	if (this->amount == 0) return NULL;
-	if (this->amount == 1) return queue[--this->amount];
+	if (this->amount == 1) {
+		amount = 0;
+		return this->queue[1];
+	}
 	PQElement& min = this->queue[1];
-	swap(min, this->queue[this->amount--]);
+	swap(this->queue[1], this->queue[this->amount]);
+	amount--;
 	this->heapDown(1);
 	return min;
 }
